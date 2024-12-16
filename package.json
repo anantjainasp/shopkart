@@ -6,7 +6,8 @@
     "start": "react-scripts start",
     "dev": "concurrently \"vite\" \"npm run server\"",
     "lint": "eslint .",
-    "server": "cd server && npm run dev"
+    "server": "cd server && npm run dev",
+    "build": "react-scripts build"
   },
   "dependencies": {
     "@fortawesome/free-regular-svg-icons": "^6.7.1",
