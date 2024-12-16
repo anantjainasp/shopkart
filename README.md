@@ -23,41 +23,46 @@ Before you begin, ensure you have met the following requirements:
 
 ### Getting Started
 1. Clone the Repository
-bash
+```bash
 git clone https://github.com/your-username/project-name.git
-
 cd project-name
+```
 
 ## Set Up the Backend
  
 Navigate to the backend directory:
-bash
+```bash
 cd server
+```
 ### Install the dependencies:
 
-bash
+```bash
 npm install
+```
 Create a .env file in the backend directory and add your environment variables:
 
-env
+.env
+```
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
+```
 Start the server:
-
-bash
+```bash
 npm start
-
+```
 ## Set Up the Frontend
 Open a new terminal and navigate to the frontend directory:
 
 ### Install the dependencies:
 
-bash
+```bash
 npm install
+```
 Start the React development server:
 
-bash
+```bash
 npm start
+```
 This will start the development server, and you can view your project in your browser at `http://localhost:3000`.
 
  
