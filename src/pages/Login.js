@@ -30,11 +30,17 @@ export const Login = () => {
       if (response.headers.get("content-type")?.includes("application/json")) {
         const data = await response.json();
         if (response.ok) {
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("name", data.name); // Store name in localStorage
-          localStorage.setItem("userId", data.userId); // Store userId in localStorage
-          console.log("Login successful:", data);
-          navigate("/"); // Redirect to the root URL for the home page
+          // Ensure the token is valid and user data is correctly set
+          if (data.token) {
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("name", data.name); // Store name in localStorage
+            localStorage.setItem("userId", data.userId); // Store userId in localStorage
+            console.log("Login successful:", data);
+            navigate("/"); // Redirect to the root URL for the home page
+          } else {
+            console.error("Invalid token received");
+            alert("Invalid login response. Please try again.");
+          }
         } else {
           console.error("Login failed:", data.message);
           alert("Failed to login: " + data.message);
