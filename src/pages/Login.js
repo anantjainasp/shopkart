@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { login } from "../services/auth";
 import { useAuthStore } from "../store/useAuthStore";
 import { Button } from "../components/ui/Button";
 
@@ -17,37 +18,12 @@ export const Login = () => {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      console.log("Login response:", response);
-      if (response.headers.get("content-type")?.includes("application/json")) {
-        const data = await response.json();
-        if (response.ok) {
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("name", data.name); // Store name in localStorage
-          localStorage.setItem("userId", data.userId); // Store userId in localStorage
-          console.log("Login successful:", data);
-          loginStore({ user: data });
-          navigate("/"); // Redirect to the root URL for the home page
-        } else {
-          console.error("Login failed:", data.message);
-          setError("Failed to login: " + data.message); // Set error message
-        }
-      } else {
-        console.error(
-          "Unexpected content type:",
-          response.headers.get("content-type")
-        );
-        setError("Unexpected response from server. Please try again later."); // Set error message
-      }
-    } catch (error) {
-      console.error("Login error:", error);
-      setError("Login error: " + error.message); // Set error message
+      const data = await login(formData);
+      loginStore({ user: data });
+      localStorage.setItem("token", data.token);
+      navigate("/");
+    } catch (err) {
+      setError(err);
     }
   };
 
