@@ -23,7 +23,7 @@ export const Login = () => {
       localStorage.setItem("token", data.token);
       navigate("/");
     } catch (err) {
-      setError(err);
+      setError("Invalid login credentials. Please try again.");
     }
   };
 
