@@ -15,21 +15,40 @@ export const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
     try {
-      const data = await login(formData);
-      if (data.error) {
-        console.error("Login failed:", data.error);
-        setError("Failed to login: " + data.error);
-        return;
+      const response = await fetch(
+        "https://shopkart-backend-mjgc.onrender.com/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+      console.log("Login response:", response);
+      if (response.headers.get("content-type")?.includes("application/json")) {
+        const data = await response.json();
+        if (response.ok) {
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("name", data.name); // Store name in localStorage
+          localStorage.setItem("userId", data.userId); // Store userId in localStorage
+          console.log("Login successful:", data);
+          navigate("/"); // Redirect to the root URL for the home page
+        } else {
+          console.error("Login failed:", data.message);
+          alert("Failed to login: " + data.message);
+        }
+      } else {
+        console.error(
+          "Unexpected content type:",
+          response.headers.get("content-type")
+        );
+        alert("Unexpected response from server. Please try again later.");
       }
-      loginStore({ user: data });
-      localStorage.setItem("token", data.token);
-      navigate("/");
-    } catch (err) {
-      navigate("/");
-      console.error("Login error:", err);
-      alert("Invalid login credentials. Please try again.");
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Login error: " + error.message);
     }
   };
 
