@@ -18,8 +18,8 @@ export const Navbar = ({ onSelectCategory, onSearch }) => {
 
   return (
     <nav className="bg-primary-color p-4 flex flex-wrap items-center justify-between shadow-md">
-      <div className="flex justify-center w-full">
-        <ul className="flex flex-wrap justify-center space-x-4">
+      <div className="flex justify-between w-full md:w-auto">
+        <ul className="flex flex-col md:flex-row justify-center space-y-2 md:space-y-0 md:space-x-4">
           {categories.map((category) => (
             <li key={category} className="block">
               <button
@@ -32,7 +32,7 @@ export const Navbar = ({ onSelectCategory, onSearch }) => {
           ))}
         </ul>
       </div>
-      <div className="flex items-center space-x-2 mt-2 sm:mt-0">
+      <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-2 mt-2 sm:mt-0">
         <select
           className="p-2 rounded border border-gray-300 focus:outline-none focus:border-accent-color"
           onChange={(e) => onSelectCategory(e.target.value)}
