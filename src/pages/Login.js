@@ -16,14 +16,19 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-
     try {
       const data = await login(formData);
+      if (data.error) {
+        console.error("Login failed:", data.error);
+        setError("Failed to login: " + data.error);
+        return;
+      }
       loginStore({ user: data });
       localStorage.setItem("token", data.token);
       navigate("/");
     } catch (err) {
-      setError(err);
+      console.error("Login error:", err);
+      setError("Invalid login credentials. Please try again.");
     }
   };
 
