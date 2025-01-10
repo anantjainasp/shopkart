@@ -1,17 +1,21 @@
 import { create } from 'zustand';
+import {jwtDecode} from 'jwt-decode';
+import { getToken, setToken, removeToken } from '../services/auth';
+
+const token = getToken();
+const initialUser = token ? { user: jwtDecode(token), isAuthenticated: !!token } : { user: null, isAuthenticated: false };
 
 export const useAuthStore = create((set) => ({
-  user: null,
-  isAuthenticated: false,
+  ...initialUser,
   login: (userData) => {
-    localStorage.setItem('token', userData.token); // Assuming token handling
+    setToken(userData.token);
     set({ 
       user: userData.user, 
       isAuthenticated: true 
     });
   },
   logout: () => {
-    localStorage.removeItem('token');
+    removeToken();
     set({ 
       user: null, 
       isAuthenticated: false 

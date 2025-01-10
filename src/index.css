@@ -23,11 +23,23 @@ body {
   @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6;
 }
 
+.header {
+  @apply flex flex-col md:flex-row justify-between items-center;
+}
+
 .product-image {
   width: 100%;
   height: 120px;
   object-fit: contain;
   border-radius: 8px;
+}
+
+.text-large {
+  @apply text-lg sm:text-xl md:text-2xl lg:text-3xl;
+}
+
+.button {
+  @apply px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4;
 }
 
 .modal-overlay {

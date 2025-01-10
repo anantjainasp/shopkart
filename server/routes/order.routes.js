@@ -1,18 +1,14 @@
 import express from 'express';
+import { createOrder, getUserOrders } from '../controllers/order.controller.js';
 import { protect } from '../middleware/auth.js';
-import { createOrder, getMyOrders, updateOrderStatus } from '../controllers/order.controller.js';
 
 const router = express.Router();
 
-router.use(protect);
-
 // Create a new order
-router.post('/', createOrder);
+router.post('/', protect, createOrder);
 
 // Get user orders
-router.get('/my-orders', getMyOrders);
-
-// Update order status
-router.patch('/:id/status', updateOrderStatus);
+router.get('/', protect, getUserOrders);
 
 export default router;
+    

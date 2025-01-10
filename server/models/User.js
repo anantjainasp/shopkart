@@ -34,9 +34,27 @@ const userSchema = new mongoose.Schema({
   ],
   orders: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Order'
-    }
+      items: [
+        {
+          productId: { type: Number },
+          quantity: { type: Number },
+          price: { type: Number },
+          name: { type: String },
+          image: { type: String },
+        },
+      ],
+      totalAmount: { type: Number },
+      address: {
+        street: { type: String },
+        city: { type: String },
+        state: { type: String },
+        zipCode: { type: String },
+        country: { type: String },
+      },
+      status: { type: String },
+      trackingNumber: { type: String },
+      createdAt: { type: Date, default: Date.now },
+    },
   ],
   addresses: [addressSchema],
   createdAt: { type: Date, default: Date.now }

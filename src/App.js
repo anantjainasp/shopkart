@@ -1,15 +1,14 @@
-// src/App.js
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AppLayout from './components/layout/AppLayout';
-import { Cart}  from './pages/Cart';
+import  Cart  from './pages/Cart';
 import { Profile } from './pages/Profile';
 import  Checkout  from './pages/Checkout';
+import ProductDetail from "./pages/ProductDetail";
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Products } from './pages/Products';
-import  OrderHistory  from './pages/OrderHistory';
+import  Orders  from './pages/Orders';
 import Wishlist from './pages/Wishlist';
 function App() {
   return (
@@ -24,7 +23,7 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/order-history" element={<OrderHistory />} />
+            <Route path="/orders" element={<Orders />} />
           </Routes>
         </main>
       </AppLayout>

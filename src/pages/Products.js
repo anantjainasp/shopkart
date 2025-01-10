@@ -105,82 +105,86 @@ export const Products = () => {
     return <div className="text-center py-8 text-red-600">{error}</div>;
 
   return (
-    <div className="bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Banner />
-      <div className="flex justify-center my-4">
-        <select onChange={(e) => handleCategorySelect(e.target.value)} className="border p-2 rounded">
-          <option value="">All Categories</option>
-          {categories.map((category) => (
-            <option key={category} value={category}>
-              {category.charAt(0).toUpperCase() + category.slice(1)}
-            </option>
-          ))}
-        </select>
-        <input
-          type="text"
-          placeholder="Search products..."
-          onChange={(e) => handleSearch(e.target.value)}
-          className="border p-2 rounded ml-4"
-        />
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
-        {currentProducts.map((product) => (
-          <div
-            key={product.id}
-            className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 cursor-pointer"
-            onClick={() => handleProductClick(product)}
-          >
-            <img
-              src={product.image}
-              alt={product.title}
-              className="w-full h-48 object-contain"
+      <div className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 flex justify-center">
+        <div className="w-full max-w-screen-lg">
+          <div className="flex justify-center my-4">
+            <select onChange={(e) => handleCategorySelect(e.target.value)} className="border p-2 rounded">
+              <option value="">All Categories</option>
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+            <input
+              type="text"
+              placeholder="Search products..."
+              onChange={(e) => handleSearch(e.target.value)}
+              className="border p-2 rounded ml-4"
             />
-            <div className="p-4">
-              <h3 className="text-lg font-semibold text-gray-900">
-                {product.title}
-              </h3>
-              <p className="text-gray-600 mt-1">
-                {product.description.substring(0, 50)}...
-              </p>
-              <div className="mt-4 flex items-center justify-between">
-                <span className="text-xl font-bold text-gray-900">
-                  ${product.price}
-                </span>
-                <div className="flex space-x-2">
-                  <button
-                    className="bg-accent-color text-button-text-color px-2 py-1 rounded-md hover:bg-button-hover-color"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleAddToCart(product);
-                    }}
-                  >
-                    Add to Cart
-                  </button>
-                  <button
-                    className="bg-secondary-color text-button-text-color px-2 py-1 rounded-md hover:bg-opacity-75"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleAddToWishlist(product);
-                    }}
-                  >
-                    Wishlist
-                  </button>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {currentProducts.map((product) => (
+              <div
+                key={product.id}
+                className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 cursor-pointer"
+                onClick={() => handleProductClick(product)}
+              >
+                <img
+                  src={product.image}
+                  alt={product.title}
+                  className="w-full h-48 object-contain"
+                />
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    {product.title}
+                  </h3>
+                  <p className="text-gray-600 mt-1">
+                    {product.description.substring(0, 50)}...
+                  </p>
+                  <div className="mt-4 flex items-center justify-between">
+                    <span className="text-xl font-bold text-gray-900">
+                      ${product.price}
+                    </span>
+                    <div className="flex space-x-2">
+                      <button
+                        className="bg-accent-color text-button-text-color px-2 py-1 rounded-md hover:bg-button-hover-color"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleAddToCart(product);
+                        }}
+                      >
+                        Add to Cart
+                      </button>
+                      <button
+                        className="bg-secondary-color text-button-text-color px-2 py-1 rounded-md hover:bg-opacity-75"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleAddToWishlist(product);
+                        }}
+                      >
+                        Wishlist
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div className="flex justify-center mt-4">
-        {Array.from({ length: Math.ceil(filteredProducts.length / productsPerPage) }, (_, i) => (
-          <button
-            key={i + 1}
-            onClick={() => paginate(i + 1)}
-            className={`mx-1 px-3 py-1 rounded-md ${currentPage === i + 1 ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700 hover:bg-gray-400'}`}
-          >
-            {i + 1}
-          </button>
-        ))}
+          <div className="flex justify-center mt-4">
+            {Array.from({ length: Math.ceil(filteredProducts.length / productsPerPage) }, (_, i) => (
+              <button
+                key={i + 1}
+                onClick={() => paginate(i + 1)}
+                className={`mx-1 px-3 py-1 rounded-md ${currentPage === i + 1 ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700 hover:bg-gray-400'}`}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {selectedProduct ? (
@@ -195,43 +199,23 @@ export const Products = () => {
             <img
               src={selectedProduct.image}
               alt={selectedProduct.title}
-              className="w-full h-48 object-contain mt-4"
+              className="w-full h-64 object-contain mt-4"
             />
-            <p className="mt-2 text-sm">{selectedProduct.description}</p>
-            <div className="mt-4 flex space-x-2">
+            <p className="text-gray-600 mt-4">{selectedProduct.description}</p>
+            <div className="mt-4 flex items-center justify-between">
+              <span className="text-xl font-bold text-gray-900">
+                ${selectedProduct.price}
+              </span>
               <button
-                className="bg-accent-color text-button-text-color px-3 py-1 rounded-md hover:bg-button-hover-color"
+                className="bg-accent-color text-button-text-color px-4 py-2 rounded-md hover:bg-button-hover-color"
                 onClick={() => handleAddToCart(selectedProduct)}
               >
                 Add to Cart
               </button>
-              <button
-                className="bg-secondary-color text-button-text-color px-3 py-1 rounded-md hover:bg-opacity-75"
-                onClick={() => handleAddToWishlist(selectedProduct)}
-              >
-                Wishlist
-              </button>
             </div>
           </div>
         ) : (
-          <div>
-            <h2 className="text-xl font-bold mb-4">Authentication Required</h2>
-            <p>Please login or register to add items to your cart or wishlist.</p>
-            <div className="flex space-x-4 mt-4">
-              <button
-                className="bg-accent-color text-button-text-color px-4 py-2 rounded-md hover:bg-button-hover-color"
-                onClick={() => navigate("/login")}
-              >
-                Login
-              </button>
-              <button
-                className="bg-secondary-color text-button-text-color px-4 py-2 rounded-md hover:bg-opacity-75"
-                onClick={() => navigate("/register")}
-              >
-                Register
-              </button>
-            </div>
-          </div>
+          <div>Loading...</div>
         )}
       </Modal>
       <Footer />
