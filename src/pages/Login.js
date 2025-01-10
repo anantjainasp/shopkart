@@ -14,6 +14,7 @@ export const Login = () => {
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     setError("");
     try {
       const data = await login(formData);
@@ -27,7 +28,7 @@ export const Login = () => {
       navigate("/");
     } catch (err) {
       console.error("Login error:", err);
-      setError("Invalid login credentials. Please try again.");
+      alert("Invalid login credentials. Please try again.");
     }
   };
 
