@@ -37,7 +37,7 @@ export const Navbar = ({ onSelectCategory, onSearch }) => {
           className="p-2 rounded border border-gray-300 focus:outline-none focus:border-accent-color"
           onChange={(e) => onSelectCategory(e.target.value)}
         >
-          <option value="">All Categories</option>
+          <option value="">All Catelmlkjgories</option>
           {categories.map((category) => (
             <option key={category} value={category}>
               {category}

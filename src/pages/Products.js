@@ -101,8 +101,8 @@ export const Products = () => {
       <Banner />
       <div className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 flex justify-center">
         <div className="w-full max-w-screen-lg">
-          <div className="flex justify-center my-4">
-            <select onChange={(e) => handleCategorySelect(e.target.value)} className="border p-2 rounded">
+          <div className="flex justify-center my-4 space-x-2">
+            <select onChange={(e) => handleCategorySelect(e.target.value)} className="border p-2 rounded w-1/3">
               <option value="">All Categories</option>
               {categories.map((category) => (
                 <option key={category} value={category}>
@@ -114,7 +114,7 @@ export const Products = () => {
               type="text"
               placeholder="Search products..."
               onChange={(e) => handleSearch(e.target.value)}
-              className="border p-2 rounded ml-4"
+              className="border p-2 rounded w-2/3"
             />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
