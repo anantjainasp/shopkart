@@ -8,6 +8,7 @@ import { useAuthStore } from "../store/useAuthStore";
 import Banner from "../components/ui/Banner";
 import Footer from "../components/ui/Footer";
 import { useNavigate } from "react-router-dom";
+import { FaShoppingCart, FaHeart } from 'react-icons/fa';
 
 export const Products = () => {
   const [products, setProducts] = useState([]);
@@ -120,7 +121,7 @@ export const Products = () => {
             {currentProducts.map((product) => (
               <div
                 key={product.id}
-                className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 cursor-pointer"
+                className="bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl cursor-pointer flex flex-col justify-between h-full"
                 onClick={() => handleProductClick(product)}
               >
                 <img
@@ -128,11 +129,11 @@ export const Products = () => {
                   alt={product.title}
                   className="w-full h-48 object-contain"
                 />
-                <div className="p-4">
+                <div className="p-4 flex-grow flex flex-col justify-between">
                   <h3 className="text-lg font-semibold text-gray-900">
                     {product.title}
                   </h3>
-                  <p className="text-gray-600 mt-1">
+                  <p className="text-gray-600 mt-1 flex-grow">
                     {product.description.substring(0, 50)}...
                   </p>
                   <div className="mt-4 flex items-center justify-between">
@@ -141,22 +142,22 @@ export const Products = () => {
                     </span>
                     <div className="flex space-x-2">
                       <button
-                        className="bg-accent-color text-button-text-color px-2 py-1 rounded-md hover:bg-button-hover-color"
+                        className="bg-blue-400 text-white p-2 rounded-full shadow-sm hover:bg-blue-500 transition-transform duration-200"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleAddToCart(product);
                         }}
                       >
-                        Add to Cart
+                        <FaShoppingCart />
                       </button>
                       <button
-                        className="bg-secondary-color text-button-text-color px-2 py-1 rounded-md hover:bg-opacity-75"
+                        className="bg-green-400 text-white p-2 rounded-full shadow-sm hover:bg-green-500 transition-transform duration-200"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleAddToWishlist(product);
                         }}
                       >
-                        Wishlist
+                        <FaHeart />
                       </button>
                     </div>
                   </div>
