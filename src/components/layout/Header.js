@@ -12,7 +12,6 @@ const Header = ({ onSelectCategory, onSearch }) => {
   const items = useCartStore((state) => state.items);
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
   const username = localStorage.getItem('name') || 'Guest';
 
   const handleLogout = () => {
@@ -62,7 +61,7 @@ const Header = ({ onSelectCategory, onSearch }) => {
                   </Link>
                 </li>
                 <li>
-                  <span className="text-[#DDE6ED] py-2 md:py-0">Welcome, <span className="font-bold uppercase text-accent-color">{username}</span></span>
+                <span className="text-[#DDE6ED] py-2 md:py-0">Welcome, <span className="font-bold text-accent-color">{username}</span></span>
                 </li>
                 <li>
                   <Button size="md" onClick={handleLogout} className="hover:bg-white hover:text-black py-2 md:py-0">

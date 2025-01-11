@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../services/auth";
 import { useAuthStore } from "../store/useAuthStore";
 import { Button } from "../components/ui/Button";
 
@@ -26,17 +25,13 @@ export const Login = () => {
           body: JSON.stringify(formData),
         }
       );
-      console.log("Login response:", response);
       if (response.headers.get("content-type")?.includes("application/json")) {
         const data = await response.json();
         if (response.ok) {
-          // Ensure the token is valid and user data is correctly set
           if (data.token) {
+            loginStore({ user: data });
             localStorage.setItem("token", data.token);
-            localStorage.setItem("name", data.name); // Store name in localStorage
-            localStorage.setItem("userId", data.userId); // Store userId in localStorage
-            console.log("Login successful:", data);
-            navigate("/"); // Redirect to the root URL for the home page
+            navigate("/");
           } else {
             console.error("Invalid token received");
             alert("Invalid login response. Please try again.");
