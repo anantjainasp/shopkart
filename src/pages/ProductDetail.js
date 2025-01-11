@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore'; 
-import { useWishlistStore } from '../store/useWishlistStore'; // Assuming this is where useWishlistStore is defined
+import { useWishlistStore } from '../store/useWishlistStore'; 
+import { useAuthStore } from '../store/useAuthStore';
 
 const ProductDetail = () => {
   const { id: productId } = useParams();
@@ -13,21 +14,14 @@ const ProductDetail = () => {
   const [error, setError] = useState(null);
   const [showFullDescription, setShowFullDescription] = useState(false);
   const { addItem, updateQuantityInCart } = useCartStore();
-  const { addItemToWishlist } = useWishlistStore();
+  const addToWishlist = useWishlistStore((state) => state.addItem);
+  const { isAuthenticated } = useAuthStore();
 
-  const handleAddToWishlist = async (product) => {
-    const { wishlist = [] } = useWishlistStore.getState(); 
-    const existsInWishlist = wishlist.some((item) => item.id === product.id);
-
-    if (!existsInWishlist) {
-      try {
-        await addItemToWishlist(product);
-        console.log('Product added to wishlist:', product);
-      } catch (error) {
-        console.error('Error adding to wishlist:', error);
-      }
+  const handleAddToWishlist = (product) => {
+    if (!isAuthenticated) {
+      navigate('/login');
     } else {
-      console.log('Product already in wishlist');
+      addToWishlist(product);
     }
   };
 

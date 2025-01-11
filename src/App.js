@@ -17,6 +17,7 @@ function App() {
         <main className="container mx-auto px-4 py-8">
           <Routes>
             <Route path="/" element={<Products />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/profile" element={<Profile />} />

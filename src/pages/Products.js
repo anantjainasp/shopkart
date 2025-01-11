@@ -5,7 +5,6 @@ import { getProducts, fetchCategories } from "../services/products";
 import { useCartStore } from "../store/useCartStore";
 import { useWishlistStore } from "../store/useWishlistStore";
 import { useAuthStore } from "../store/useAuthStore";
-import { Modal } from "../components/ui/Modal";
 import Banner from "../components/ui/Banner";
 import Footer from "../components/ui/Footer";
 import { useNavigate } from "react-router-dom";
@@ -16,9 +15,6 @@ export const Products = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [isLogin, setIsLogin] = useState(true);
   const { isAuthenticated } = useAuthStore();
   const addItem = useCartStore((state) => state.addItem);
   const addToWishlist = useWishlistStore((state) => state.addItem);
@@ -49,27 +45,22 @@ export const Products = () => {
 
   const handleAddToCart = (product) => {
     if (!isAuthenticated) {
-      setIsModalOpen(true);
-      setIsLogin(true);
+      navigate('/login');
     } else {
       addItem(product);
-      setIsModalOpen(false);
     }
   };
 
   const handleAddToWishlist = (product) => {
     if (!isAuthenticated) {
-      setIsModalOpen(true);
-      setIsLogin(false);
+      navigate('/login');
     } else {
       addToWishlist(product);
-      setIsModalOpen(false);
     }
   };
 
   const handleProductClick = (product) => {
-    setSelectedProduct(product);
-    setIsModalOpen(true);
+    navigate(`/product/${product.id}`);
   };
 
   const handleCategorySelect = (category) => {
@@ -186,38 +177,6 @@ export const Products = () => {
           </div>
         </div>
       </div>
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        {selectedProduct ? (
-          <div className="p-4">
-            <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-              onClick={() => setIsModalOpen(false)}
-            >
-              &times;
-            </button>
-            <h2 className="text-xl font-bold">{selectedProduct.title}</h2>
-            <img
-              src={selectedProduct.image}
-              alt={selectedProduct.title}
-              className="w-full h-64 object-contain mt-4"
-            />
-            <p className="text-gray-600 mt-4">{selectedProduct.description}</p>
-            <div className="mt-4 flex items-center justify-between">
-              <span className="text-xl font-bold text-gray-900">
-                ${selectedProduct.price}
-              </span>
-              <button
-                className="bg-accent-color text-button-text-color px-4 py-2 rounded-md hover:bg-button-hover-color"
-                onClick={() => handleAddToCart(selectedProduct)}
-              >
-                Add to Cart
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div>Loading...</div>
-        )}
-      </Modal>
       <Footer />
     </div>
   );
