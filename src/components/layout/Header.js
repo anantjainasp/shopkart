@@ -85,6 +85,70 @@ const Header = ({ onSelectCategory, onSearch }) => {
           </ul>
         </div>
       </div>
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-end items-start z-50">
+          <div className="bg-[#27374D] p-6 rounded-l-lg shadow-lg w-64 h-full">
+            <ul className="flex flex-col list-none items-start space-y-4">
+              <li>
+                <Link to="/" className="text-[#DDE6ED] hover:text-black-900 block py-2">
+                  Products
+                </Link>
+              </li>
+              <li>
+                <Link to="/wishlist" className="text-[#DDE6ED] hover:text-black-900 block py-2">
+                  <Heart className="h-5 w-5 mr-1" /> Wishlist
+                </Link>
+              </li>
+              <li>
+                <Link to="/cart" className="text-[#DDE6ED] hover:text-black-900 block py-2">
+                  <ShoppingCart className="h-5 w-5 mr-1" /> Cart ({items.length})
+                </Link>
+              </li>
+              <li>
+                <Link to="/orders" className="text-[#DDE6ED] hover:text-black-900 block py-2">
+                  Orders
+                </Link>
+              </li>
+              {isAuthenticated ? (
+                <>
+                  <li>
+                    <Link to="/profile" className="text-[#DDE6ED] hover:text-gray-900 block py-2">
+                      <FontAwesomeIcon icon={faUser} className="mr-1" />
+                    </Link>
+                  </li>
+                  <li>
+                  <span className="text-[#DDE6ED] py-2">Welcome, <span className="font-bold text-accent-color">{username}</span></span>
+                  </li>
+                  <li>
+                    <Button size="md" onClick={handleLogout} className="hover:bg-white hover:text-black py-2">
+                      Logout
+                    </Button>
+                  </li>
+                </>
+              ) : (
+                <div className="text-[#DDE6ED] flex flex-col items-start space-y-2">
+                  <li>
+                    <Button variant="outline" size="md" href="/login" className="hover:bg-white hover:text-black py-2">
+                      Login
+                    </Button>
+                  </li>
+                  <li>
+                    <Button size="md" href="/register" className="hover:bg-white hover:text-black py-2">
+                      Register
+                    </Button>
+                  </li>
+                </div>
+              )}
+            </ul>
+            <button
+              className="mt-4 text-white"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </header>
   );
 };
