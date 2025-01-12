@@ -30,8 +30,8 @@ const Header = ({ onSelectCategory, onSearch }) => {
         >
           <FontAwesomeIcon icon={faBars} className="h-6 w-6" />
         </button>
-        <div className={`flex-col md:flex-row md:flex ${isMobileMenuOpen ? "flex" : "hidden"} md:space-x-8 bg-[#27374D] md:bg-transparent p-4 md:p-0 rounded md:rounded-none shadow-md md:shadow-none`}>
-          <ul className="flex flex-col md:flex-row list-none items-center md:space-x-4 md:space-x-8">
+        <div className={`flex-col md:flex-row md:flex ${isMobileMenuOpen ? "flex" : "hidden"} md:space-x-4 lg:space-x-6 bg-[#27374D] md:bg-transparent p-4 md:p-2 rounded md:rounded-none shadow-md md:shadow-none`}>
+          <ul className="flex flex-col md:flex-row list-none items-center md:space-x-2 lg:space-x-4">
             <li>
               <Link to="/" className="text-[#DDE6ED] hover:text-black-900 flex items-center py-2 md:py-0">
                 Products

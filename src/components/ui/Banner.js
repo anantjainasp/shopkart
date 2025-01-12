@@ -5,15 +5,12 @@ const Banner = () => {
   const offers = [
     {
       text: "Explore our latest deals!",
-      image: "https://source.unsplash.com/1600x600/?shopping,store",
     },
     {
       text: "Discover top-rated products!",
-      image: "https://source.unsplash.com/1600x600/?ecommerce,products",
     },
     {
       text: "Shop now and save big!",
-      image: "https://source.unsplash.com/1600x600/?discount,sale",
     },
   ];
 
@@ -26,16 +23,18 @@ const Banner = () => {
   }, [offers.length]);
 
   return (
-    <div className="relative bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 text-center shadow-lg">
-      <img
-        src={offers[currentIndex].image}
-        alt={offers[currentIndex].text}
-        className="w-full h-64 object-cover opacity-80 rounded-lg"
-      />
-      <div className="absolute inset-0 flex items-center justify-center">
-        <h2 className="text-2xl font-bold bg-black bg-opacity-60 p-4 rounded-lg">
-          {offers[currentIndex].text}
-        </h2>
+    <div className="relative"
+         >
+         <img
+                className="w-full h-[20vh] sm:h-[30vh] md:h-[40vh] lg:h-[50vh] xl:h-[60vh]  object-content"
+
+            src="https://images.unsplash.com/photo-1441986380878-c4248f5b8b5b?//1200x600"
+            alt="Shopping"
+          />
+          <div className="absolute inset-0 bg-gray-500 mix-blend-multiply"></div>      <div className="absolute inset-0 flex items-center justify-center">
+          <h2 className="text-xs sm:text-sm md:text-lg lg:text-xl xl:text-2xl font-bold bg-blue-300 bg-opacity-50 p-4 rounded-lg text-white">
+    {offers[currentIndex].text}
+</h2>
       </div>
     </div>
   );
