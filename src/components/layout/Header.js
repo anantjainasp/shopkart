@@ -12,7 +12,7 @@ const Header = ({ onSelectCategory, onSearch }) => {
   const items = useCartStore((state) => state.items);
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const username = localStorage.getItem('username') || 'Guest';
+  const username = localStorage.getItem('name') || 'Guest';
   const handleLogout = () => {
     logout();
     navigate("/login");
@@ -31,7 +31,7 @@ const Header = ({ onSelectCategory, onSearch }) => {
           <FontAwesomeIcon icon={faBars} className="h-6 w-6" />
         </button>
         <div className={`flex-col md:flex-row md:flex ${isMobileMenuOpen ? "flex" : "hidden"} md:space-x-8 bg-[#27374D] md:bg-transparent p-4 md:p-0 rounded md:rounded-none shadow-md md:shadow-none`}>
-          <ul className="flex flex-col md:flex-row list-none md:space-x-8">
+          <ul className="flex flex-col md:flex-row list-none items-center md:space-x-4 md:space-x-8">
             <li>
               <Link to="/" className="text-[#DDE6ED] hover:text-black-900 flex items-center py-2 md:py-0">
                 Products
@@ -70,9 +70,6 @@ const Header = ({ onSelectCategory, onSearch }) => {
               </>
             ) : (
               <div className="text-[#DDE6ED] flex flex-col md:flex-row items-center space-x-0 md:space-x-2">
-                <li>
-                <span className="text-[#DDE6ED] py-2 md:py-0">Welcome, <span className="font-bold text-accent-color">{username}</span></span>
-                </li>
                 <li>
                   <Button variant="outline" size="md" href="/login" className="hover:bg-white hover:text-black py-2 md:py-0">
                     Login
