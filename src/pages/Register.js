@@ -22,6 +22,7 @@ export const Register = () => {
       const data = await register(formData);
       loginStore({ user: data });
       localStorage.setItem('token', data.token);
+      localStorage.setItem('name', data.name);
       navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || 'An error occurred');
