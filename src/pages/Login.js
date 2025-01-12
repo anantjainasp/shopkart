@@ -31,6 +31,7 @@ export const Login = () => {
           if (data.token) {
             loginStore({ user: data });
             localStorage.setItem("token", data.token);
+            localStorage.setItem("name", data.name);
             navigate("/");
           } else {
             console.error("Invalid token received");
