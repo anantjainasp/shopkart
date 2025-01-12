@@ -12,8 +12,7 @@ const Header = ({ onSelectCategory, onSearch }) => {
   const items = useCartStore((state) => state.items);
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const username = localStorage.getItem('name') || 'Guest';
-
+  const username = user ? user.name : localStorage.getItem('username') || 'Guest';
   const handleLogout = () => {
     logout();
     navigate("/login");
