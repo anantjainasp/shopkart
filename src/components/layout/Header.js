@@ -71,6 +71,9 @@ const Header = ({ onSelectCategory, onSearch }) => {
             ) : (
               <div className="text-[#DDE6ED] flex flex-col md:flex-row items-center space-x-0 md:space-x-2">
                 <li>
+                <span className="text-[#DDE6ED] py-2 md:py-0">Welcome, <span className="font-bold text-accent-color">{username}</span></span>
+                </li>
+                <li>
                   <Button variant="outline" size="md" href="/login" className="hover:bg-white hover:text-black py-2 md:py-0">
                     Login
                   </Button>
