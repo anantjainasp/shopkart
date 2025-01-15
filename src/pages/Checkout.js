@@ -5,7 +5,7 @@ import api from '../services/api';
 import { fetchProducts } from '../services/api';
 
 const Checkout = () => {
-  const { items, clearCart } = useCartStore();
+  const { items, clearCart, fetchCart } = useCartStore();
   const [address, setAddress] = useState({
     street: '',
     city: '',
@@ -43,6 +43,18 @@ const Checkout = () => {
   };
 
   useEffect(() => {
+    const initializeCart = async () => {
+      await fetchCart(); // Ensure cart is fetched before loading product details
+      loadProductDetails();
+    };
+    initializeCart();
+  }, []); // Run once on component mount
+
+  useEffect(() => {
+    console.log('Cart items updated:', items);
+  }, [items]);
+
+  useEffect(() => {
     const fetchUserProfile = async () => {
       try {
         const response = await api.get('/users/profile');
@@ -60,33 +72,31 @@ const Checkout = () => {
     fetchUserProfile();
   }, []);
 
-  useEffect(() => {
-    const loadProductDetails = async () => {
-      try {
-        const productsData = await fetchProducts();
-        console.log('Cart items:', items);
-        if (items && items.length > 0) { // Check if items is defined and not empty
-          const cartProductDetails = items.map(cartItem => {
-            const product = productsData.find(p => p.id === cartItem.productId);
-            return {
-              ...cartItem,
-              image: product.image,
-              title: product.title,
-              price: product.price
-            };
-          });
-          console.log('Mapped product details:', cartProductDetails);
-          setProductDetails(cartProductDetails);
-        } else {
-          console.log('No items in cart');
-          setProductDetails([]);
-        }
-      } catch (error) {
-        console.error('Failed to load product details:', error);
+  const loadProductDetails = async () => {
+    try {
+      const productsData = await fetchProducts();
+      console.log('Cart items:', items);
+      if (items && items.length > 0) { // Check if items is defined and not empty
+        const cartProductDetails = items.map(cartItem => {
+          const product = productsData.find(
+            p => p.id === cartItem.productId);
+          return {
+            ...cartItem,
+            image: product.image,
+            title: product.title,
+            price: product.price
+          };
+        });
+        console.log('Mapped product details:', cartProductDetails);
+        setProductDetails(cartProductDetails);
+      } else {
+        console.log('No items in cart');
+        setProductDetails([]);
       }
-    };
-    loadProductDetails();
-  }, [items]);
+    } catch (error) {
+      console.error('Failed to load product details:', error);
+    }
+  };
 
   useEffect(() => {
     console.log('Addresses updated:', addresses);
