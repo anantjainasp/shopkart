@@ -44,24 +44,49 @@ const Checkout = () => {
 
   useEffect(() => {
     const initializeCart = async () => {
-      await fetchCart(); // Ensure cart is fetched before loading product details
-      loadProductDetails();
+      try {
+        await fetchCart(); // Fetch cart first
+      } catch (error) {
+        console.error('Failed to fetch cart:', error);
+      }
     };
     initializeCart();
   }, []); // Run once on component mount
 
   useEffect(() => {
-    console.log('Cart items updated:', items);
-  }, [items]);
+    const loadCartDetails = async () => {
+      try {
+        if (items && items.length > 0) {
+          const productsData = await fetchProducts();
+          console.log('Cart items:', items);
+          const cartProductDetails = items.map(cartItem => {
+            const product = productsData.find(p => p.id === cartItem.productId);
+            return {
+              ...cartItem,
+              image: product.image,
+              title: product.title,
+              price: product.price
+            };
+          });
+          console.log('Mapped product details:', cartProductDetails);
+          setProductDetails(cartProductDetails);
+        } else {
+          console.log('No items in cart');
+          setProductDetails([]);
+        }
+      } catch (error) {
+        console.error('Failed to load cart details:', error);
+      }
+    };
+    loadCartDetails();
+  }, [items]); // Run whenever items change
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
         const response = await api.get('/users/profile');
         const userData = response.data;
-        setProductDetails(userData.cartItems);
         setAddresses(userData.addresses);
-        console.log('User profile loaded:', userData);
         if (userData.addresses.length > 0) {
           setAddress(userData.addresses[0]); // Set the first address as default
         }
@@ -72,31 +97,9 @@ const Checkout = () => {
     fetchUserProfile();
   }, []);
 
-  const loadProductDetails = async () => {
-    try {
-      const productsData = await fetchProducts();
-      console.log('Cart items:', items);
-      if (items && items.length > 0) { // Check if items is defined and not empty
-        const cartProductDetails = items.map(cartItem => {
-          const product = productsData.find(
-            p => p.id === cartItem.productId);
-          return {
-            ...cartItem,
-            image: product.image,
-            title: product.title,
-            price: product.price
-          };
-        });
-        console.log('Mapped product details:', cartProductDetails);
-        setProductDetails(cartProductDetails);
-      } else {
-        console.log('No items in cart');
-        setProductDetails([]);
-      }
-    } catch (error) {
-      console.error('Failed to load product details:', error);
-    }
-  };
+  useEffect(() => {
+    console.log('Cart items updated:', items);
+  }, [items]);
 
   useEffect(() => {
     console.log('Addresses updated:', addresses);
